@@ -12,25 +12,26 @@ struct Menu: View {
     @ObservedObject var dataVM = DataViewModel()
     
     var body: some View {
-        VStack {
-            NavigationLink { CrudView() }
-            label: { Text("Crud") }
-
-                  
-        }
-        .navigationTitle("Menu")
-        .toolbar {
-            ToolbarItem{
-                HStack {
-                    Text("\(dataVM.msg)")
-                        .foregroundStyle(.red)
-                        .bold()
-                        .font(.headline)
-                    
-                    Circle()
-                        .frame(width: 20)
-                        .foregroundStyle(dataVM.isSignInToiCloud ? .green : .red)
-                          
+        
+        NavigationStack {
+            VStack{
+                NavigationLink { CrudView(dataVM: dataVM) }
+                label: { Text("Crud") }
+            }
+            .navigationTitle("Menu")
+            .toolbar {
+                ToolbarItem{
+                    HStack {
+                        Text("\(dataVM.msg)")
+                            .foregroundStyle(.red)
+                            .bold()
+                            .font(.headline)
+                        
+                        Circle()
+                            .frame(width: 20)
+                            .foregroundStyle(dataVM.isSignInToiCloud ? .green : .red)
+                              
+                    }
                 }
             }
         }

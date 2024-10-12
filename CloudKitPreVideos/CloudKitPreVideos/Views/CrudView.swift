@@ -27,6 +27,13 @@ struct CrudView: View {
             }
             .pickerStyle(.wheel)
             .padding()
+            
+            Button {
+                crudVM.save()
+            } label: {
+                Text("Save")
+            }
+
                         
                   
         }
