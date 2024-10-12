@@ -11,7 +11,7 @@ import SwiftUI
 struct CloudKitPreVideosApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Menu()
         }
     }
 }

@@ -11,12 +11,13 @@ import CloudKit
 class CrudViewModel: ObservableObject {
     
     var dataVM: DataViewModel
-    var name: String = ""
-    var age: Int = 0
     
     init(dataVM: DataViewModel) {
         self.dataVM = dataVM
     }
+    
+    @Published var name: String = ""
+    @Published var age: Int = 0
     
     func save() {
         
