@@ -38,6 +38,9 @@ struct CrudView: View {
             List {
                 ForEach (crudVM.personsList, id: \.self) { person  in
                     Text(person.name)
+                        .onTapGesture {
+                            crudVM.updatePerson(person: person)
+                        }
                 }
             }
 
