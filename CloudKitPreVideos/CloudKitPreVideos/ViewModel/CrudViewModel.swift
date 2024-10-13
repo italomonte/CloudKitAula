@@ -25,7 +25,11 @@ class CrudViewModel: ObservableObject {
     func save() {
         
         let personRecord =  CKRecord(recordType: "person")
-
+        
+        if name == "" || age == 0 {
+            return
+        }
+        
         personRecord["name"] = name
         personRecord["age"] = age
         
