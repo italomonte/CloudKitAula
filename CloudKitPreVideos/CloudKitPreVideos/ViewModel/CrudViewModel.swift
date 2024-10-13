@@ -22,6 +22,9 @@ class CrudViewModel: ObservableObject {
         personRecord["name"] = name
         personRecord["age"] = age
         
+        if name == "" || age == 0 {
+            return
+        
         dataVM.container.publicCloudDatabase.save(personRecord) { record  , error in
             if let error = error {
                 print("Não foi possivel salvation: \(error.localizedDescription)")
@@ -34,7 +37,9 @@ class CrudViewModel: ObservableObject {
         
         self.name = ""
         self.age = 1
+        self.fetch()
     }
+    
     
     func fetch() {
         
@@ -93,5 +98,21 @@ class CrudViewModel: ObservableObject {
             
         }
 
+    }
+    
+    func deleteItem (indexSet: IndexSet) {
+        guard let index = indexSet.first else {return}
+        
+        let person = personsList[index]
+        let record = person.record
+        
+        dataVM.publicDatabase.delete(withRecordID: record.recordID) { [weak self ] returnedRecordID, returnedError in
+            
+            DispatchQueue.main.async {
+                self?.personsList.remove(at: index)
+            }
+            
+        }
+        
     }
 }

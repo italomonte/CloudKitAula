@@ -41,7 +41,7 @@ struct CrudView: View {
                         .onTapGesture {
                             crudVM.updatePerson(person: person)
                         }
-                }
+                }.onDelete(perform: crudVM.deleteItem)
             }
 
                         
