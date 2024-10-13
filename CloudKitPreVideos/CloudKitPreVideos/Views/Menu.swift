@@ -23,7 +23,7 @@ struct Menu: View {
                 ToolbarItem{
                     HStack {
                         Text("\(dataVM.msg)")
-                            .foregroundStyle(.red)
+                            .foregroundStyle(dataVM.isSignInToiCloud ? .green : .red)
                             .bold()
                             .font(.headline)
                         
