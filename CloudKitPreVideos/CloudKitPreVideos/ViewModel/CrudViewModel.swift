@@ -24,6 +24,7 @@ class CrudViewModel: ObservableObject {
         
         if name == "" || age == 0 {
             return
+        }
         
         dataVM.container.publicCloudDatabase.save(personRecord) { record  , error in
             if let error = error {
