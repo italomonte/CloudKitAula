@@ -38,5 +38,9 @@ class CrudViewModel: ObservableObject {
             }
             
         }
+        
+        name = ""
+        age = 1
+        
     }
 }
