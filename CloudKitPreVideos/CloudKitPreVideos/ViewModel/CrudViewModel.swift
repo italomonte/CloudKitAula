@@ -48,7 +48,6 @@ class CrudViewModel: ObservableObject {
         let predicate = NSPredicate(value: true)
         
         let query = CKQuery(recordType: "person", predicate: predicate)
-        let queryOperation = CKQueryOperation(query: query)
         
         var returnedPersons: [Person] = []
         
