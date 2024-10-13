@@ -59,12 +59,22 @@ class CrudViewModel: ObservableObject {
                 for (recordID, recordResult) in matchResults {
                     switch recordResult {
                     case .success(let record):
-                        print("Registro encontrado: \(record)")
+                        print("Registro encontrado: \(String(describing: record["name"]))")
+                        let person = Person(name: record["name"] as! String, age: record["age"] as! Int, record: record)
+                        
+                        returnedPersons.append(person)
+                        
+                        
                     case .failure(let error):
                         print("Erro ao buscar o registro com ID \(recordID): \(error)")
                     }
                 }
-                if let cursor = queryCursor {
+                
+                DispatchQueue.main.async {
+                    self.personsList = returnedPersons
+                }
+
+                if let _ = queryCursor {
                     print("Há mais resultados para buscar usando este cursor.")
                 }
             case .failure(let error):
