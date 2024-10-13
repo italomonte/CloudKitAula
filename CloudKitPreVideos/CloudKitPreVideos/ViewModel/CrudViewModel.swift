@@ -48,9 +48,9 @@ class CrudViewModel: ObservableObject {
         let predicate = NSPredicate(value: true)
         
         let query = CKQuery(recordType: "person", predicate: predicate)
-        let queryOperation = CKQueryOperation(query: query)
         
-        var returnedPersons: [Person] = []
+        //Implementar returnedPersons
+        var _: [Person] = []
         
         dataVM.publicDatabase.fetch(withQuery: query) { result in
             
@@ -73,31 +73,21 @@ class CrudViewModel: ObservableObject {
             }
         }
         
+    }
+    
+    
+    func updatePerson (person: Person) {
+        let record = person.record
+        record["name"] = "New Name!"
         
-//        // para cada record recuperado
-//        queryOperation.recordMatchedBlock = { (returnedRecordID, returnedResult) in
-//            switch returnedResult {
-//                
-//            case .success(let record):
-//                guard let name = record["name"] as? String else {return}
-//                guard let age = record["age"] as? Int else {return}
-//                returnedPersons.append(Person(name: name, age: age, record: record))
-//                print("record encontrado")
-//
-//            case .failure(let error) :
-//                print("Error recordMatchedBlock: \(error)")
-//            }
-//        }
-//        
-//        // função chamada quando a operação é finalizada
-//        queryOperation.queryResultBlock = { [weak self] _ in
-//            DispatchQueue.main.async {
-//                self?.personsList = returnedPersons
-//                print("operação finalizada")
-//            }
-//        }
-        
-//        dataVM.container.publicCloudDatabase.add(queryOperation)
-
+        dataVM.container.publicCloudDatabase.save(record) { record  , error in
+            if let error = error {
+                print("Não foi possivel salvation: \(error.localizedDescription)")
+            } else {
+                print("Registro salvo com sucesso")
+                self.fetch()
+            }
+            
+        }
     }
 }
