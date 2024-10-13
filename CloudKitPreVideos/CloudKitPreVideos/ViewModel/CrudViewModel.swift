@@ -1,10 +1,3 @@
-//
-//  DataViewModel.swift
-//  CloudKitPreVideos
-//
-//  Created by Italo Guilherme Monte on 12/10/24.
-//
-
 import Foundation
 import CloudKit
 
