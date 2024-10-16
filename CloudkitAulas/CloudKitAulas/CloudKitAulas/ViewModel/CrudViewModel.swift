@@ -1,10 +1,3 @@
-//
-//  DataViewModel.swift
-//  CloudKitPreVideos
-//
-//  Created by Italo Guilherme Monte on 12/10/24.
-//
-
 import Foundation
 import CloudKit
 
@@ -21,7 +14,7 @@ class CrudViewModel: ObservableObject {
     
     func save() {
         
-        let personRecord =  CKRecord(recordType: "person")
+        let personRecord = CKRecord(recordType: "person")
         
         if name == "" || age == 0 {
             return
@@ -34,7 +27,8 @@ class CrudViewModel: ObservableObject {
             if let error = error {
                 print("Não foi possivel salvar: \(error.localizedDescription)")
             } else {
-                print("Registro salvado com sucesso")
+                print("Registro salvo com sucesso")
+                print(record?.recordID.recordName ?? "oi")
             }
             
         }
@@ -43,4 +37,5 @@ class CrudViewModel: ObservableObject {
         age = 1
         
     }
+    
 }
