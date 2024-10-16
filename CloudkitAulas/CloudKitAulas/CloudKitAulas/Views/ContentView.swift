@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  CloudKitPreVideos
-//
-//  Created by Italo Guilherme Monte on 12/10/24.
-//
-
 import SwiftUI
 
 struct ContentView: View {
@@ -13,14 +6,14 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text("\(dataVM.msg)")
-                .foregroundStyle(dataVM.isSignInToiCloud ? .green : .red)
+            Text("\(dataVM.status)")
+                .foregroundStyle(.red)
                 .bold()
                 .font(.headline)
             
             Circle()
                 .frame(width: 20)
-                .foregroundStyle(dataVM.isSignInToiCloud ? .green : .red)
+                .foregroundStyle(dataVM.isSigned ? .green : .red)
                 
         }
         .padding()
