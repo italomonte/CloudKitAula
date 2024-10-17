@@ -35,7 +35,7 @@ class CrudViewModel: ObservableObject {
         
         dataVM.container.publicCloudDatabase.save(personRecord) { record  , error in
             if let error = error {
-                print("Não foi possivel salvation: \(error.localizedDescription)")
+                print("Não foi possivel salvar: \(error.localizedDescription)")
             } else {
                 print("Registro salvo com sucesso")
                 self.fetch()
@@ -86,6 +86,8 @@ class CrudViewModel: ObservableObject {
             }
         }
         
+        name = ""
+        age = 1
         
     }
 }
