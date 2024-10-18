@@ -64,6 +64,7 @@ class CrudViewModel: ObservableObject {
                     switch recordResult {
                     case .success(let record):
                         print("Registro encontrado: \(String(describing: record["name"]))")
+                        
                         let person = Person(name: record["name"] as! String, age: record["age"] as! Int, record: record)
                         
                         returnedPersons.append(person)
@@ -79,8 +80,10 @@ class CrudViewModel: ObservableObject {
                 }
 
                 if let _ = queryCursor {
+                    
                     print("Há mais resultados para buscar usando este cursor.")
                 }
+                
             case .failure(let error):
                 print("Erro ao realizar a consulta: \(error)")
             }

@@ -7,6 +7,7 @@ struct CrudView: View {
     
     init(dataVM: DataViewModel) {
         self.crudVM = CrudViewModel(dataVM: dataVM)
+        
     }
     
     var body: some View {
@@ -27,8 +28,25 @@ struct CrudView: View {
             } label: {
                 Text("Save")
             }
+            
+            Button {
+                crudVM.fetch()
+            } label: {
+                Text("FETCH")
+            }
+            
+            List {
+                ForEach (crudVM.personsList, id: \.self) { person  in
+                    Text(person.name)
+                }
+            }
+            
+            
+
+
                   
         }
+        
         .navigationTitle("Crud")
         .padding()
     }

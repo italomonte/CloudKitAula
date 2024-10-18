@@ -11,7 +11,8 @@ class CrudViewModel: ObservableObject {
     
     @Published var name: String = ""
     @Published var age: Int = 0
-    
+    @Published var personsList: [Person] = []
+
     func save() {
         
         let personRecord = CKRecord(recordType: "person")
@@ -35,6 +36,53 @@ class CrudViewModel: ObservableObject {
         
         name = ""
         age = 1
+        
+    }
+    
+    func fetch() {
+        
+        let predicate = NSPredicate(value: true)
+        
+        let query = CKQuery(recordType: "person", predicate: predicate)
+        
+        var returnedPersons: [Person] = []
+        
+        dataVM.container.publicCloudDatabase.fetch(withQuery: query) { result in
+            
+            switch result {
+            case .success(let (matchResults, queryCursor)):
+
+                for (recordID, recordResult) in matchResults {
+                    switch recordResult {
+                    case .success(let record):
+                        print("Registro encontrado: \(String(describing: record["name"]))")
+                        
+                        let person = Person(name: record["name"] as! String, age: record["age"] as! Int, record: record)
+                        
+                        returnedPersons.append(person)
+                        
+                        
+                    case .failure(let error):
+                        print("Erro ao buscar o registro com ID \(recordID): \(error)")
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.personsList = returnedPersons
+                }
+
+                if let _ = queryCursor {
+                    
+                    print("Há mais resultados para buscar usando este cursor.")
+                    
+                }
+                
+            case .failure(let error):
+                print("Erro ao realizar a consulta: \(error)")
+            }
+        }
+            
+        
         
     }
     
