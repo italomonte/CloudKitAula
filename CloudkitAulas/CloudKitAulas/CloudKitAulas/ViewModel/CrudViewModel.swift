@@ -86,4 +86,19 @@ class CrudViewModel: ObservableObject {
         
     }
     
+    
+    func update(person: Person) {
+        let record = person.record
+        record["name"] = "New Name!"
+        
+        dataVM.container.publicCloudDatabase.save(record) { record  , error in
+            if let error = error {
+                print("Não foi possivel salvar: \(error.localizedDescription)")
+            } else {
+                print("Registro salvo com sucesso")
+                self.fetch()
+            }
+            
+        }
+    }
 }
