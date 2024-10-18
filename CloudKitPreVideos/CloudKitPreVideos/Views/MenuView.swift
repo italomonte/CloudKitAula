@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Menu: View {
+struct MenuView: View {
     
     @ObservedObject var dataVM = DataViewModel()
     
@@ -37,8 +37,4 @@ struct Menu: View {
         }
         .padding()
     }
-}
-
-#Preview {
-    Menu()
 }

@@ -10,14 +10,13 @@ class CrudViewModel: ObservableObject {
     }
     
     @Published var name: String = ""
-    @Published var age: Int = 1
-    
+    @Published var age: Int = 0
     @Published var personsList: [Person] = []
 
-    
     func save() {
         
-        let personRecord =  CKRecord(recordType: "person")
+        let personRecord = CKRecord(recordType: "person")
+        
         if name == "" || age == 0 {
             return
         }
@@ -25,25 +24,20 @@ class CrudViewModel: ObservableObject {
         personRecord["name"] = name
         personRecord["age"] = age
         
-        if name == "" || age == 0 {
-            return
-        }
-        
         dataVM.container.publicCloudDatabase.save(personRecord) { record  , error in
             if let error = error {
                 print("Não foi possivel salvar: \(error.localizedDescription)")
             } else {
                 print("Registro salvo com sucesso")
-                self.fetch()
+                print(record?.recordID.recordName ?? "oi")
             }
             
         }
         
-        self.name = ""
-        self.age = 1
-        self.fetch()
+        name = ""
+        age = 1
+        
     }
-    
     
     func fetch() {
         
@@ -51,10 +45,9 @@ class CrudViewModel: ObservableObject {
         
         let query = CKQuery(recordType: "person", predicate: predicate)
         
-        //Implementar returnedPersons
         var returnedPersons: [Person] = []
         
-        dataVM.publicDatabase.fetch(withQuery: query) { result in
+        dataVM.container.publicCloudDatabase.fetch(withQuery: query) { result in
             
             switch result {
             case .success(let (matchResults, queryCursor)):
@@ -81,45 +74,31 @@ class CrudViewModel: ObservableObject {
                 if let _ = queryCursor {
                     
                     print("Há mais resultados para buscar usando este cursor.")
+                    
                 }
                 
             case .failure(let error):
                 print("Erro ao realizar a consulta: \(error)")
             }
         }
+            
+        
         
     }
     
     
-    func updatePerson (person: Person) {
+    func update(person: Person) {
         let record = person.record
         record["name"] = "New Name!"
         
         dataVM.container.publicCloudDatabase.save(record) { record  , error in
             if let error = error {
-                print("Não foi possivel salvation: \(error.localizedDescription)")
+                print("Não foi possivel salvar: \(error.localizedDescription)")
             } else {
                 print("Registro salvo com sucesso")
                 self.fetch()
             }
             
         }
-
-    }
-    
-    func deleteItem (indexSet: IndexSet) {
-        guard let index = indexSet.first else {return}
-        
-        let person = personsList[index]
-        let record = person.record
-        
-        dataVM.publicDatabase.delete(withRecordID: record.recordID) { [weak self ] returnedRecordID, returnedError in
-            
-            DispatchQueue.main.async {
-                self?.personsList.remove(at: index)
-            }
-            
-        }
-        
     }
 }
